@@ -39,16 +39,8 @@ public class NodesBoundary {
         return this.nodesDAO.findDateByNameRetornoRosa(node);
     }
 
-    public List<Object[]> findTreeNodes() throws Exception {
-        return this.nodesDAO.findTreeNodes();
-    }
-
     public List<NodeAlarmDTO> findAllAlarms() throws Exception {
         return this.nodesDAO.findAlarm();
-    }
-
-    public void updateAlarm(NodeAlarmDTO nodeAlarmDTO) throws Exception {
-        this.nodesDAO.updateAlarm(nodeAlarmDTO);
     }
 
     public int countNodesUp() throws Exception {

@@ -21,7 +21,6 @@ public class NodePollerManagedBean implements Serializable {
     @PostConstruct
     public void init() {
         node = Nodes.getInstance();
-        //node.buildTree();
         node.loadAlarms();
     }
 

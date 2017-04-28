@@ -34,6 +34,8 @@ import org.primefaces.model.TreeNode;
  */
 public final class Nodes implements Serializable {
 
+    private static final long serialVersionUID = 4765367560053472233L;
+
     NodesBoundary nodesBoundary = lookupNodesBoundaryBean();
 
     private static volatile Nodes node;
@@ -152,75 +154,6 @@ public final class Nodes implements Serializable {
     }
 
     /**
-     * Armar el arbol en la aplicación con los datos consultados
-     */
-    /*public void buildTree() {
-        try {
-            ArrayList<String> wordsRegion = new ArrayList<>();
-            ArrayList<String> wordsCiudad = new ArrayList<>();
-            ArrayList<String> wordsSds = new ArrayList<>();
-            ArrayList<String> wordsChasis = new ArrayList<>();
-            ArrayList<String> wordsNodo = new ArrayList<>();
-
-            List<Object[]> list = nodesBoundary.findTreeNodes();
-            this.root = new DefaultTreeNode(new Document("Nodo", "--", "--"), null);
-            TreeNode regiones = null;
-            TreeNode ciudades = null;
-            TreeNode sds = null;
-            TreeNode chasis = null;
-            TreeNode nodes = null;
-            for (Object[] obj : list) {
-                if (!String.valueOf(obj[0]).contains("---") && !String.valueOf(obj[0]).contains("NDS")) {
-                    if (!wordsRegion.contains(String.valueOf(obj[0]))) {
-                        wordsRegion.add(String.valueOf(obj[0]));
-                        if (String.valueOf(obj[8]).equals("1")) {
-                            regiones = new DefaultTreeNode(new Document(String.valueOf(obj[0]), Constants.IMAGE_NODE_UP, "2"), this.root);
-                        } else {
-                            regiones = new DefaultTreeNode(new Document(String.valueOf(obj[0]), Constants.IMAGE_NODE_DOWN, "1"), this.root);
-                        }
-                    }
-                    if (!wordsCiudad.contains(String.valueOf(obj[1]))) {
-                        wordsCiudad.add(String.valueOf(obj[1]));
-                        if (String.valueOf(obj[8]).equals("1")) {
-                            ciudades = new DefaultTreeNode(new Document(String.valueOf(obj[1]), Constants.IMAGE_NODE_UP, "2"), regiones);
-                        } else {
-                            ciudades = new DefaultTreeNode(new Document(String.valueOf(obj[1]), Constants.IMAGE_NODE_DOWN, "1"), regiones);
-                        }
-                    }
-                    if (!wordsSds.contains(String.valueOf(obj[2]))) {
-                        wordsSds.add(String.valueOf(obj[2]));
-                        if (String.valueOf(obj[9]).equals("1")) {
-                            sds = new DefaultTreeNode(new Document(String.valueOf(obj[2]), Constants.IMAGE_NODE_UP, "2"), ciudades);
-                        } else {
-                            sds = new DefaultTreeNode(new Document(String.valueOf(obj[2]), Constants.IMAGE_NODE_DOWN, "1"), ciudades);
-                        }
-                        wordsChasis.clear();
-                    }
-                    if (!wordsChasis.contains(String.valueOf(obj[3]))) {
-                        wordsChasis.add(String.valueOf(obj[3]));
-                        if (String.valueOf(obj[10]).equals("1")) {
-                            chasis = new DefaultTreeNode(new Document(String.valueOf(obj[3]), Constants.IMAGE_NODE_UP, "2"), sds);
-                        } else {
-                            chasis = new DefaultTreeNode(new Document(String.valueOf(obj[3]), Constants.IMAGE_NODE_DOWN, "1"), sds);
-                        }
-                        wordsNodo.clear();
-                    }
-                    if (!wordsNodo.contains(String.valueOf(obj[5]))) {
-                        wordsNodo.add(String.valueOf(obj[5]));
-                        if (String.valueOf(obj[6]).equals("1")) {
-                            nodes = new DefaultTreeNode("nodo", new Document(String.valueOf(obj[5]), Constants.IMAGE_NODE_UP, "2"), chasis);
-                        } else {
-                            nodes = new DefaultTreeNode("nodo", new Document(String.valueOf(obj[5]), Constants.IMAGE_NODE_DOWN, "1"), chasis);
-                        }
-                    }
-                }
-            }
-        } catch (Exception e) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Cargando Arbol"));
-            Logger.getLogger(getClass().getSimpleName()).log(Level.SEVERE, new StringBuilder(Constants.BODY_EXCEPTION).append(getClass().getName()).append(": buildTree: Error armando el arbol de la aplicación").toString(), e);
-        }
-    }*/
-    /**
      * Procedimiento para buscar la información del nodo
      *
      * @param tree
@@ -276,24 +209,6 @@ public final class Nodes implements Serializable {
     }
 
     /**
-     * Procedimiento para eliminar alarmas de la tabla
-     */
-    public void deleteAlarms() {
-        try {
-            for (NodeAlarmDTO varNodeAlarmDTO : selectNodeAlarmDTO) {
-                if (listAlarm.contains(varNodeAlarmDTO)) {
-                    listAlarm.remove(varNodeAlarmDTO);
-                    nodesBoundary.updateAlarm(varNodeAlarmDTO);
-                }
-            }
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Exito", "Alarmas Eliminadas"));
-        } catch (Exception e) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Eliminando Alarmnas"));
-            Logger.getLogger(getClass().getSimpleName()).log(Level.SEVERE, new StringBuilder(Constants.BODY_EXCEPTION).append(getClass().getName()).append(": deleteAlarms: Error al eliminar alarmas").toString(), e);
-        }
-    }
-
-    /**
      * Procedimiento para validar el estado del nodo y regresar la imagen
      *
      * @param num
@@ -321,17 +236,13 @@ public final class Nodes implements Serializable {
             this.retpwr = "---";
             this.retarop = "---";
             Pattern pat = Pattern.compile("([^\\|]*)\\|([^\\|]*)\\|([^\\|]*)\\|([^\\|]*)\\|([^\\|]*)\\|([^\\|]*)\\|([^\\|]*)\\|([^\\|]*)\\|([^\\|]*)\\|([^\\|]*)\\|([^\\|]*)\\|([^\\|]*)\\|([^\\|]*)\\|");
-            // System.out.println("ENTRO----1: " + nameNode);
             Matcher mat = pat.matcher(getLevels(this.nameNode));
-            // System.out.println("ENTRO----2");
             if (mat.find()) {
-                //    System.out.println("ENTRO----3");
                 this.fwdpwr = mat.group(10);
                 this.fwdinrf = mat.group(11);
                 this.retpwr = mat.group(12);
                 this.retarop = mat.group(13);
             }
-            //System.out.println("--------------------------- ENTRO: " + this.searchNameNode);
             this.searchNameNode = "";
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Consultando Niveles"));

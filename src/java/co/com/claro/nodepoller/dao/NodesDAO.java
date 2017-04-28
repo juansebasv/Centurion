@@ -16,7 +16,6 @@ import javax.ejb.TransactionManagementType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import javax.transaction.SystemException;
 import javax.transaction.UserTransaction;
 
 /**
@@ -26,16 +25,16 @@ import javax.transaction.UserTransaction;
 @Stateless
 @TransactionManagement(TransactionManagementType.BEAN)
 public class NodesDAO {
-    
+
     @PersistenceContext(unitName = "NodePollerPU")
     private EntityManager em;
-    
+
     @Resource
     private UserTransaction utx;
-    
+
     public NodesDAO() {
     }
-    
+
     public NodeDTO findNodeByNameForward(String node) throws Exception {
         List<Object[]> list;
         try {
@@ -78,7 +77,7 @@ public class NodesDAO {
             throw new Exception("Centurión: NodesDAO: findNodeByNameForward: Error: " + e.getMessage());
         }
     }
-    
+
     public NodeDTO findNodeByNameRetorno(String node) throws Exception {
         List<Object[]> list;
         try {
@@ -113,7 +112,7 @@ public class NodesDAO {
             throw new Exception("Centurión: NodesDAO: findNodeByNameRetorno: Error: " + e.getMessage());
         }
     }
-    
+
     public ArrayList<NodeDateDTO> findDateByNameForward(String node) throws Exception {
         List<Object[]> list;
         ArrayList<NodeDateDTO> listNodeDateDto;
@@ -137,7 +136,7 @@ public class NodesDAO {
             throw new Exception("Centurión: NodesDAO: findDateByNameForward: Error: " + e.getMessage());
         }
     }
-    
+
     public ArrayList<NodeDateDTO> findDateByNameRetornoAurora(String node) throws Exception {
         List<Object[]> list;
         ArrayList<NodeDateDTO> listNodeDateDto;
@@ -161,7 +160,7 @@ public class NodesDAO {
             throw new Exception("Centurión: NodesDAO: findDateByNameRetornoAurora: Error: " + e.getMessage());
         }
     }
-    
+
     public ArrayList<NodeDateDTO> findDateByNameRetornoRosa(String node) throws Exception {
         List<Object[]> list;
         ArrayList<NodeDateDTO> listNodeDateDto;
@@ -185,19 +184,7 @@ public class NodesDAO {
             throw new Exception("Centurión: NodesDAO: findDateByNameRetornoRosa: Error: " + e.getMessage());
         }
     }
-    
-    public List<Object[]> findTreeNodes() throws Exception {
-        List<Object[]> list;
-        try {
-            String consulta = "SELECT * FROM optical_tree u";
-            Query query = em.createNativeQuery(consulta);
-            list = query.getResultList();
-            return list;
-        } catch (Exception e) {
-            throw new Exception("Centurión: NodesDAO: findTreeNodes: Error: " + e.getMessage());
-        }
-    }
-    
+
     public List<NodeAlarmDTO> findAlarm() throws Exception {
         List<OpticalNodealarm> list;
         List<NodeAlarmDTO> alarm = new ArrayList<>();
@@ -227,25 +214,7 @@ public class NodesDAO {
             throw new Exception("Centurión: NodesDAO: findAlarm: Error: " + e.getMessage());
         }
     }
-    
-    public void updateAlarm(NodeAlarmDTO nodeAlarmDTO) throws Exception {
-        try {
-            OpticalNodealarm opticalNodealarm = em.find(OpticalNodealarm.class, nodeAlarmDTO.getId_Entity());
-            opticalNodealarm.setAck(1);
-            utx.begin();
-            em.merge(opticalNodealarm);
-            utx.commit();
-        } catch (Exception e) {
-            String error;
-            try {
-                utx.rollback();
-            } catch (SystemException e1) {
-                error = e1.getMessage();
-            }
-            throw new IllegalStateException("Ocurrió un error al actualizar la entidad.");
-        }
-    }
-    
+
     public int countNodes(String id) throws Exception {
         List<Object[]> list;
         try {
@@ -258,12 +227,12 @@ public class NodesDAO {
             throw new Exception("Centurión: NodesDAO: countNodes: Error: " + e.getMessage());
         }
     }
-    
+
     private String toFormatDate(Date date) {
         SimpleDateFormat format = new SimpleDateFormat(Constants.DATE_FORMAT);
         return format.format(date);
     }
-    
+
     private List<OpticalNodealarm> findAll() throws Exception {
         try {
             return em.createNamedQuery("OpticalNodealarm.findAll").getResultList();

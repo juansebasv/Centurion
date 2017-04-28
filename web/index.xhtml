@@ -7,21 +7,6 @@
                 xmlns:f="http://java.sun.com/jsf/core">
     <ui:define name="content">
         <p:layout id="layoutPoller">
-            <!--p:layoutUnit id="inner_west" position="west" size="10%" style="border: none; background-color: rgba(0, 0, 0, 0);">
-                <p:fragment id="fragNodos" autoUpdate="false"> 
-                    <p:tree id="nodes" value="#//{nodePollerManagedBean.node.root}" var="varNode">                 
-                        <p:treeNode expandedIcon="ui-icon-folder-open" collapsedIcon="ui-icon-folder-collapsed">
-                            <p:graphicImage id="camimage1" value="#//{varNode.size}"/>
-                            <h:outputText id="text" value="#//{varNode.name}"/>
-                        </p:treeNode>
-                        <p:treeNode id="nodasdadadosF" type="nodo" icon="ui-icon-gear" >
-                            <p:graphicImage value="#//{varNode.size}" />
-                            <h:outputText value="#//{varNode.name}"/>
-                            <p:commandButton icon="ui-icon-search" title="Información del Nodo" action="#//{nodePollerManagedBean.node.findInfoNode(varNode.name)}" styleClass="buttonNode" update=":formNode:msgs :formNode:panelDatos"/>
-                        </p:treeNode>
-                    </p:tree>
-                </p:fragment>
-            </p:layoutUnit-->
             <p:layoutUnit id="inner_center" position="center" size="100%" style="border: none; background-color: rgba(0, 0, 0, 0);">
                 <center>
                     <h:panelGrid id="panelDatos" columns="1" cellpadding="0" cellspacing="0" style="width: 70%;">
@@ -142,8 +127,8 @@
                             </h:panelGrid>
                         </h:panelGrid>
                     </h:panelGrid><br/><br/>
-                    <p:dataTable id="tableNodesF1" var="alarm" value="#{nodePollerManagedBean.node.listAlarm}" draggableColumns="true" rows="5" paginator="true" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                                 rowsPerPageTemplate="5,10,15" reflow="true" paginatorPosition="bottom" style="width: 80%; font-size: smaller; align-content: center; align-items: center; alignment-adjust: central;" selection="#{nodePollerManagedBean.node.selectNodeAlarmDTO}" rowKey="#{alarm}" emptyMessage="No hay Registros" widgetVar="nodesTableF1" >                    
+                    <p:dataTable id="tableNodesF1" var="alarm" value="#{nodePollerManagedBean.node.listAlarm}" draggableColumns="true" rows="6" paginator="true" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                 rowsPerPageTemplate="6,12,18" reflow="true" paginatorPosition="bottom" style="width: 70%; font-size: smaller; align-content: center; align-items: center; alignment-adjust: central;" selection="#{nodePollerManagedBean.node.selectNodeAlarmDTO}" rowKey="#{alarm}" emptyMessage="No hay Registros" widgetVar="nodesTableF1" >                    
 
                         <f:facet name="header" >
                             Alarmas Registradas<p:spacer width="20"/>
@@ -165,11 +150,6 @@
                                 <h:outputText value="#{alarm.plataforma}"/>
                             </center>
                         </p:column>
-                        <p:column headerText="Chasis" sortBy="#{alarm.chasis}">    
-                            <center>
-                                <h:outputText value="#{alarm.chasis}"/>
-                            </center>
-                        </p:column>
                         <p:column headerText="SDS" sortBy="#{alarm.sds}">     
                             <center>
                                 <h:outputText value="#{alarm.sds}"/>
@@ -185,28 +165,8 @@
                                 <h:outputText value="#{alarm.regional}"/>
                             </center>
                         </p:column>
-                        <!--p:column headerText="Causa" sortBy="#//{alarm.typeAlarm}">    
-                            <center>
-                                <h:outputText value="#//{alarm.typeAlarm}"/>
-                            </center>
-                        </p:column-->
-                        <!--p:column headerText="Nivel" sortBy="#//{alarm.alarma}">     
-                            <center>
-                                <h:outputText value="#//{alarm.alarma}"/>
-                            </center>
-                        </p:column-->
-                        <!--p:column style="text-align:center; width: 5%;">
-                            <center>
-                                <p:commandButton icon="ui-icon-search" title="Información del Nodo" action="#{nodePollerManagedBean.node.findInfoNode(alarm.nodo)}" styleClass="buttonNode" update=":formNode:msgs :formNode:panelDatos"/>
-                            </center>
-                        </p:column-->
-                        <!--p:column selectionMode="multiple" style="text-align:center; width: 5%;"/-->
                         <f:facet name="footer">
-                            <!--p:outputLabel value="#//{nodePollerManagedBean.node.nodesUp}" style="margin-left: 15%"/><p:spacer width="3"/><p:graphicImage value="#//{nodePollerManagedBean.node.stateNodes(1)}"/><p:spacer width="5"/>
-                            <p:outputLabel value="#//{nodePollerManagedBean.node.nodesDown}"/><p:spacer width="3"/><p:graphicImage value="#//{nodePollerManagedBean.node.stateNodes(2)}"/-->
-    
                             <p:commandButton icon="ui-icon-arrowrefresh-1-s" title="Recargar" styleClass="buttonNode2" action="#{nodePollerManagedBean.node.loadAlarms()}" style="margin-left: 20%" update=":formNode:msgs :formNode:tableNodesF1"/>
-
                             <!--p:commandButton icon="ui-icon-trash" title="Eliminar Alarma" styleClass="buttonNode" action="#//{nodePollerManagedBean.node.deleteAlarms()}" style="margin-left: 40%" update=":formNode:msgs :formNode:tableNodesF1"/-->
                         </f:facet>
                     </p:dataTable>
