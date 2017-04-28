@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
+    <system systemId="file:/C:/Users/ECF3758A/Desktop/OpticalWS.wsdl" uri="src/conf/xml-resources/web-service-references/OpticalWS/wsdl/OpticalWS.wsdl"/>
+    <system systemId="http://localhost:81/OpticalWSrv/services/OpticalWS?wsdl" uri="src/conf/xml-resources/web-service-references/OpticalWS/wsdl/localhost_81/OpticalWSrv/services/OpticalWS.wsdl"/>
+</catalog>

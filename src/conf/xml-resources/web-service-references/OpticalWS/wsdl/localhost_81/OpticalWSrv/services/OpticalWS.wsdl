@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://opticalws.claro.com.co" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="http://opticalws.claro.com.co" xmlns:intf="http://opticalws.claro.com.co" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<!--WSDL created by Apache Axis version: 1.4
+Built on Apr 22, 2006 (06:55:48 PDT)-->
+ <wsdl:types>
+  <schema elementFormDefault="qualified" targetNamespace="http://opticalws.claro.com.co" xmlns="http://www.w3.org/2001/XMLSchema">
+   <element name="getPosition">
+    <complexType>
+     <sequence>
+      <element name="node" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getPositionResponse">
+    <complexType>
+     <sequence>
+      <element name="getPositionReturn" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getLevels">
+    <complexType>
+     <sequence>
+      <element name="node" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getLevelsResponse">
+    <complexType>
+     <sequence>
+      <element name="getLevelsReturn" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+  </schema>
+ </wsdl:types>
+
+   <wsdl:message name="getPositionRequest">
+
+      <wsdl:part element="impl:getPosition" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getPositionResponse">
+
+      <wsdl:part element="impl:getPositionResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getLevelsResponse">
+
+      <wsdl:part element="impl:getLevelsResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getLevelsRequest">
+
+      <wsdl:part element="impl:getLevels" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:portType name="OpticalWS">
+
+      <wsdl:operation name="getPosition">
+
+         <wsdl:input message="impl:getPositionRequest" name="getPositionRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:getPositionResponse" name="getPositionResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getLevels">
+
+         <wsdl:input message="impl:getLevelsRequest" name="getLevelsRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:getLevelsResponse" name="getLevelsResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="OpticalWSSoapBinding" type="impl:OpticalWS">
+
+      <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="getPosition">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getPositionRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getPositionResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getLevels">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getLevelsRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getLevelsResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="OpticalWSService">
+
+      <wsdl:port binding="impl:OpticalWSSoapBinding" name="OpticalWS">
+
+         <wsdlsoap:address location="http://localhost:81/OpticalWSrv/services/OpticalWS"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>

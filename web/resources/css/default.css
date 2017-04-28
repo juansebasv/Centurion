@@ -1,0 +1,224 @@
+body {
+    background-color: #ffffff;
+    background-image: url("/NodePoller/faces/javax.faces.resources/img/bg_html.jpg"); 
+    background-repeat: no-repeat; 
+    background-attachment: fixed; 
+    background-size: cover;
+    font-size: 12px;
+    font-family: HelveticaKVA; 
+    margin: 8px;
+}
+
+h1 {
+    font-family: Arial, "Arial CE", "Lucida Grande CE", lucida, "Helvetica CE", sans-serif;
+    border-bottom: 1px solid #AFAFAF; 
+    font-size:  16px;
+    font-weight: bold;
+    margin: 0px;
+    padding: 0px;
+    color: #D20005;
+}
+h3{
+    font-weight: bold;
+    margin-bottom:13px;
+    font-size:  14px;
+}
+.ui-widget-content{
+    background: none;
+}
+a:link, a:visited {
+    color: #045491;
+    font-weight : bold;
+    text-decoration: none;
+}
+
+a:link:hover, a:visited:hover  {
+    color: #045491;
+    font-weight : bold;
+    text-decoration : underline;
+}
+
+
+.ui-layout-unit-content{
+    background-color: rgba(0, 0, 0, 0) !important;
+}
+
+@font-face {
+    font-family: Arsenal;
+    src: url("/NodePoller/faces/javax.faces.resources/font/Arsenal-Regular.woff");
+}
+
+@font-face {
+    font-family: SansationLight;
+    src: url("/NodePoller/faces/javax.faces.resources/font/SansationLight.woff");
+}
+@font-face {
+    font-family: HelveticaKVA;
+    src: url("/NodePoller/faces/javax.faces.resources/font/HelveticaKVAFont.woff");
+}
+
+.campoTexto{
+    border:0;
+    color: #484848;
+    font-weight:bold;
+    font-size: 14px;
+    font-family: Arial;
+    background-color: rgba(0, 0, 0, 0);
+}
+
+.campoInput:focus{
+    opacity: 1;   
+    -webkit-box-reflect: below 0px -webkit-gradient(linear, left top, left bottom, from(transparent), color-stop(.7, transparent), to(rgba(0,0,0,0.4)));    
+    -webkit-box-shadow: 0px 0px 20px rgba(255,255,255,0.8);
+    -moz-box-shadow: 0px 0px 20px rgba(255,255,255,0.8);
+    box-shadow: 0px 0px 20px rgba(255,255,255,0.8);
+}
+.textoCabecera {
+    width: 100px;
+    margin: 0 auto;
+    font-family: SansationLight !important;
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 23px;
+    margin-bottom: 14px;
+
+}
+.textoCabeceraSeg{
+    font-family: SansationLight !important;
+    font-size: 18px;
+    color: #ffffff;
+}
+
+.textoLegend{
+    font-weight: normal !important; 
+    font-family: Arial !important;
+    font-size: 120%;
+    color: #ffffff !important;
+}
+
+.outputInfoC1{
+    font-family: Arial;
+    font-weight: normal;
+    font-style: italic;
+    font-size: 13px;
+    color: #484848; 
+}
+
+.outputInfoC2{
+    font-family: Arial;
+    font-weight: normal;
+    font-style: italic;
+    font-size: 13px;
+    color: #484848;
+}
+
+.ui-datatable-header{
+    border:0 !important;
+    background:#A8221D !important;
+    color: #ffffff !important;
+    font-weight:normal !important;    
+    font-family: Arial !important;
+}
+
+.ui-paginator{
+    border:0 !important;
+    background:#A8221D !important;
+    color: #ffffff !important;
+    font-weight:normal !important;    
+    font-family: Arial !important;
+}
+
+.ui-tree {
+    background: rgba(0, 0, 0, 0) !important;
+    background-color: rgba(0, 0, 0, 0) !important;
+    border: none !important;
+    color: #ffffff !important;
+    font-weight:normal !important;    
+    font-family: Arial !important;
+    font-size: 15px !important;
+
+}
+
+.buttonNode{
+    border: none !important; 
+    box-shadow: none !important;  
+    background: rgba(0, 0, 0, 0) !important;
+}
+/*.ui-treenode .ui-treenode-parent .ui-treenode-unselected{
+    background: rgba(0, 0, 0, 0) !important;
+    background-color: rgba(0, 0, 0, 0) !important;
+}*/
+
+
+
+.ui-fieldset-legend{
+    background: rgba(0, 0, 0, 0) !important;
+    font-weight: normal !important; 
+    font-family: Arial !important;
+    font-size: 15px;
+    border: none !important;
+    box-shadow: none !important;
+    color: #ffffff !important;
+}
+
+.header{
+    padding:6px;
+    margin:3px;
+}
+
+.ui-fieldset{
+    background: #ffffff;
+    margin-top:23px;
+}
+.ui-fieldset div.ui-fieldset-content{
+    color: #484848 !important;
+    font-family: Arial !important;
+}
+
+.platLeft{
+    width: 50%;
+    float: left;
+    background: #ececec;
+
+}
+
+.platRigth {
+    width: 50%;
+    float: right;
+    background: #ececec;
+}
+
+.platLeftmed{
+    width: 50%;
+    float: left;
+    background: #efefef;
+
+}
+
+.platRigthmed {
+    width: 50%;
+    float: right;
+    background: #efefef;
+}
+.clearfix{
+    clear: both;
+}
+
+.padcontent{
+    padding:4px;
+}
+
+.blink {
+    animation: blink-animation 1s steps(3, start) infinite;
+    -webkit-animation: blink-animation 1s steps(3, start) infinite;
+}
+@keyframes blink-animation {
+    to {
+        visibility: hidden;
+    }
+}
+@-webkit-keyframes blink-animation {
+    to {
+        visibility: hidden;
+    }
+}

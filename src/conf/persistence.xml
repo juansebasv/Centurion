@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+  <persistence-unit name="NodePollerPU" transaction-type="JTA">
+    <jta-data-source>jdbc/controlNode</jta-data-source>
+    <class>co.com.claro.nodepoller.entities.OpticalAlarmtype</class>
+    <class>co.com.claro.nodepoller.entities.OpticalChasis</class>
+    <class>co.com.claro.nodepoller.entities.OpticalCity</class>
+    <class>co.com.claro.nodepoller.entities.OpticalConfigfile</class>
+    <class>co.com.claro.nodepoller.entities.OpticalLevel</class>
+    <class>co.com.claro.nodepoller.entities.OpticalNode</class>
+    <class>co.com.claro.nodepoller.entities.OpticalNodeModel</class>
+    <class>co.com.claro.nodepoller.entities.OpticalNodealarm</class>
+    <class>co.com.claro.nodepoller.entities.OpticalPlatform</class>
+    <class>co.com.claro.nodepoller.entities.OpticalRegion</class>
+    <class>co.com.claro.nodepoller.entities.OpticalSds</class>
+    <class>co.com.claro.nodepoller.entities.OpticalSlot</class>
+    <class>co.com.claro.nodepoller.entities.OpticalSlottype</class>
+    <class>co.com.claro.nodepoller.entities.OpticalState</class>
+    <class>co.com.claro.nodepoller.entities.OpticalTransponder</class>
+    <class>co.com.claro.nodepoller.entities.OpticalTransponderModel</class>
+    <exclude-unlisted-classes>true</exclude-unlisted-classes>
+    <properties>
+      <property name="javax.persistence.schema-generation.database.action" value="create"/>
+    </properties>
+  </persistence-unit>
+</persistence>

@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pe="http://primefaces.org/ui/extensions">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <h:outputStylesheet name="./css/default.css"/>
+        <h:outputStylesheet name="./css/tableLayout.css"/>
+        <title>Centurión</title>
+        <link href='./resources/img/Clarofav.png' rel='shortcut icon' type='image/png'/>
+    </h:head>
+
+    <h:body>
+        <h:form id="formNode">
+            <p:growl id="msgs" showDetail="true" life="3000"/>
+            <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()"/>
+            <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+                <p:graphicImage value="./resources/img/load.gif"/>
+            </p:dialog>
+
+            <p:layout fullPage="true" >
+                <div class="header">
+                    <img width="118" height="40" src="./resources/img/logo_claro.png" /><p:outputLabel value="" style="margin-left: 7%;"/>
+                    <pe:timer id="timeCount" timeout="#{nodePollerManagedBean.node.task.diff}" format="HH:mm:ss" listener="#{nodePollerManagedBean.node.reLoad()}" singleRun="false" update=":formNode:msgs :formNode:tableNodesF1 :formNode:timeCount" immediate="true"/>
+                    <p:layoutUnit position="north" size="10%" resizable="false" closable="false" collapsible="false" style="border: none; background-color: rgba(0, 0, 0, 0);padding: 0 0 0 0;position: relative">
+                    </p:layoutUnit>
+                    <p:layoutUnit position="center" resizable="false" closable="false" collapsible="false" style="border: none; background-color: rgba(0, 0, 0, 0);"> 
+                        <ui:insert name="content"></ui:insert>
+                    </p:layoutUnit> 
+                    <img width="90" height="60" src="./resources/img/centurion_platino.png" style="margin-left: 70%;"/>
+                </div>
+            </p:layout>
+        </h:form>
+    </h:body>
+</html>

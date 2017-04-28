@@ -1,0 +1,234 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./template/basicTemplate.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core">
+    <ui:define name="content">
+        <p:layout id="layoutPoller">
+            <!--p:layoutUnit id="inner_west" position="west" size="10%" style="border: none; background-color: rgba(0, 0, 0, 0);">
+                <p:fragment id="fragNodos" autoUpdate="false"> 
+                    <p:tree id="nodes" value="#//{nodePollerManagedBean.node.root}" var="varNode">                 
+                        <p:treeNode expandedIcon="ui-icon-folder-open" collapsedIcon="ui-icon-folder-collapsed">
+                            <p:graphicImage id="camimage1" value="#//{varNode.size}"/>
+                            <h:outputText id="text" value="#//{varNode.name}"/>
+                        </p:treeNode>
+                        <p:treeNode id="nodasdadadosF" type="nodo" icon="ui-icon-gear" >
+                            <p:graphicImage value="#//{varNode.size}" />
+                            <h:outputText value="#//{varNode.name}"/>
+                            <p:commandButton icon="ui-icon-search" title="Información del Nodo" action="#//{nodePollerManagedBean.node.findInfoNode(varNode.name)}" styleClass="buttonNode" update=":formNode:msgs :formNode:panelDatos"/>
+                        </p:treeNode>
+                    </p:tree>
+                </p:fragment>
+            </p:layoutUnit-->
+            <p:layoutUnit id="inner_center" position="center" size="100%" style="border: none; background-color: rgba(0, 0, 0, 0);">
+                <center>
+                    <h:panelGrid id="panelDatos" columns="1" cellpadding="0" cellspacing="0" style="width: 70%;">
+                        <h:panelGrid columns="5">
+                            <p:outputLabel for="nodeSearch" value="Buscar Nodo:" styleClass="textoCabecera"/>
+                            <p:inputText id="nodeSearch" value="#{nodePollerManagedBean.node.searchNameNode}" label="Buscar Nodo" title="Buscar Nodo" maxlength="10" placeholder="Nodo"/>
+                            <p:commandButton id="button1" icon="ui-icon-search" title="Buscar Nodo" styleClass="buttonNode" action="#{nodePollerManagedBean.node.searchNode()}" style="margin-left: 5%" update=":formNode:msgs :formNode:panelDatos"/>
+                            <p:commandButton id="button2" value="Niveles" icon="ui-icon-transferthick-e-w" title="Buscar Nieveles en Tiempo Real" styleClass="buttonNode" action="#{nodePollerManagedBean.node.findNodeInRealTime()}" style="margin-left: 5%" onmousedown="PF('dlgNode').show()" update=":formNode:msgs :formNode:panelView1"/>
+                        </h:panelGrid>
+
+                        <p:fieldset  styleClass="room">
+                            <h4>Datos Generales Nodo:
+                                <p:outputLabel id="node" value="#{nodePollerManagedBean.node.nodeDtoF.nodo}" styleClass="outputInfoC2"/><p:spacer width="5"/>
+                                <p:graphicImage value="#{nodePollerManagedBean.node.nodeDtoF.estado}" />
+                            </h4>
+                            <div class="platLeft">
+                                <div class="padcontent">
+                                    <h:outputLabel for="sds" value="SDS: "  styleClass="campoTexto"/>
+                                    <p:outputLabel id="sds" value="#{nodePollerManagedBean.node.nodeDtoF.sds}"  styleClass="outputInfoC2"/><br/>
+                                    <h:outputLabel for="region" value="Región: "  styleClass="campoTexto"/>
+                                    <p:outputLabel id="region" value="#{nodePollerManagedBean.node.nodeDtoF.region}" styleClass="outputInfoC1"/><br/>
+                                    <h:outputLabel for="city" value="Ciudad: " styleClass="campoTexto"/>
+                                    <p:outputLabel id="city" value="#{nodePollerManagedBean.node.nodeDtoF.city}" styleClass="outputInfoC2"/><br/>
+                                </div>
+                            </div>
+                            <div class="platRigth">
+                                <div class="padcontent">
+                                    <h:outputLabel for="plataform" value="Plataforma: " styleClass="campoTexto"/>
+                                    <p:outputLabel id="plataform" value="#{nodePollerManagedBean.node.nodeDtoF.plataforma}" styleClass="outputInfoC2"/><br/>
+                                    <h:outputLabel for="transpor" value="Transponder: " styleClass="campoTexto"/>
+                                    <p:outputLabel id="transpor" value="#{nodePollerManagedBean.node.nodeDtoF.transponder}" styleClass="outputInfoC1"/><br/>
+                                    <h:outputLabel for="model" value="Modelo: " styleClass="campoTexto"/>
+                                    <p:outputLabel id="model" value="#{nodePollerManagedBean.node.nodeDtoF.modelo}" styleClass="outputInfoC2"/><br/>
+                                </div>
+                            </div><br/><br/><br/>
+                            <h4><p:outputLabel value="Datos Forward"/><p:outputLabel value="Datos Retorno" style="margin-left: 40%"/></h4>
+                            <div class="platLeft">
+                                <div class="padcontent">
+                                    <h:outputLabel for="chasis" value="Chasis: " styleClass="campoTexto"/>
+                                    <p:outputLabel id="chasis" value="#{nodePollerManagedBean.node.nodeDtoF.chasis}" styleClass="outputInfoC1"/><br/>
+                                    <h:outputLabel for="typeSlot" value="Tipo Slot: " styleClass="campoTexto"/>
+                                    <p:outputLabel id="typeSlot" value="#{nodePollerManagedBean.node.nodeDtoF.typeSlot}" styleClass="outputInfoC1"/><br/>
+
+                                    <h:outputLabel for="slot" value="Slot: " styleClass="campoTexto"/>
+                                    <p:outputLabel id="slot" value="#{nodePollerManagedBean.node.nodeDtoF.slot}"  styleClass="outputInfoC2"/><br/>
+                                    <h:outputLabel for="marca" value="Marcación: "  styleClass="campoTexto"/>
+                                    <p:outputLabel id="marca" value="#{nodePollerManagedBean.node.nodeDtoF.marcacion}" styleClass="outputInfoC2"/><br/>
+                                </div>
+                            </div>
+                            <div class="platRigth">
+                                <div class="padcontent">
+                                    <h:outputLabel for="chasisR" value="Chasis: " styleClass="campoTexto"/>
+                                    <p:outputLabel id="chasisR" value="#{nodePollerManagedBean.node.nodeDtoR.chasis}" styleClass="outputInfoC1"/><br/>
+                                    <h:outputLabel for="typeSlotR" value="Tipo Slot: " styleClass="campoTexto"/>
+                                    <p:outputLabel id="typeSlotR" value="#{nodePollerManagedBean.node.nodeDtoR.typeSlot}" styleClass="outputInfoC1"/><br/>
+
+                                    <h:outputLabel for="slotR" value="Slot: " styleClass="campoTexto"/>
+                                    <p:outputLabel id="slotR" value="#{nodePollerManagedBean.node.nodeDtoR.slot}"  styleClass="outputInfoC2"/><br/>
+                                    <h:outputLabel for="marcaR" value="Marcación: " styleClass="campoTexto"/>
+                                    <p:outputLabel id="marcaR" value="#{nodePollerManagedBean.node.nodeDtoR.marcacion}"  styleClass="outputInfoC2"/><br/>
+                                </div>
+                            </div><br/><br/>
+                        </p:fieldset>
+                        <h:panelGrid  columns="2">
+                            <h:panelGrid>
+                                <p:dataTable id="tableNodesF" var="nodesF" value="#{nodePollerManagedBean.node.listNodeF}" draggableColumns="true" rows="5" paginator="true" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                             paginatorPosition="bottom" style="font-size: smaller;"  emptyMessage="No hay Registros" widgetVar="nodesTableF" >
+                                    <f:facet name="header" >
+                                        Registros Forward <p:spacer width="20"/>
+                                        <h:commandLink>
+                                            <p:graphicImage value="./resources/img/excel1.png" title="Exportar a Excel"/>
+                                            <p:dataExporter type="xls" target="tableNodesF" fileName="Historial Forward" postProcessor="#{nodePollerManagedBean.node.postProcessXLS}"/>
+                                        </h:commandLink>
+                                    </f:facet>
+                                    <p:column headerText="Fecha" sortBy="#{nodesF.fecha}">      
+                                        <center>
+                                            <h:outputText value="#{nodesF.fecha}"/>
+                                        </center>
+                                    </p:column>
+                                    <p:column headerText="InRF" sortBy="#{nodesF.inrf}">   
+                                        <center>
+                                            <h:outputText value="#{nodesF.inrf}"/>
+                                        </center>
+                                    </p:column>
+                                    <p:column headerText="Output Power" sortBy="#{nodesF.ourputpower}">
+                                        <center>
+                                            <h:outputText value="#{nodesF.ourputpower}"/>  
+                                        </center>
+                                    </p:column>
+                                </p:dataTable>
+                            </h:panelGrid>
+                            <h:panelGrid>
+                                <p:dataTable id="tableNodesR" var="nodesR" value="#{nodePollerManagedBean.node.listNodeR}" draggableColumns="true" rows="5" paginator="true" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                             paginatorPosition="bottom" style="font-size: smaller;"  emptyMessage="No hay Registros" widgetVar="nodesTableR" >
+                                    <f:facet name="header">
+                                        Registros Retorno <p:spacer width="20"/>
+                                        <h:commandLink>
+                                            <p:graphicImage value="./resources/img/excel1.png" title="Exportar a Excel"/>
+                                            <p:dataExporter type="xls" target="tableNodesR" fileName="Historial Retorno" postProcessor="#{nodePollerManagedBean.node.postProcessXLS}"/>
+                                        </h:commandLink>
+                                    </f:facet>
+                                    <p:column headerText="Fecha" sortBy="#{nodesR.fecha}">  
+                                        <center>
+                                            <h:outputText value="#{nodesR.fecha}"/>  
+                                        </center>
+                                    </p:column>
+                                    <p:column headerText="PODR/Inpower 1" sortBy="#{nodesR.power1}">  
+                                        <center>
+                                            <h:outputText value="#{nodesR.power1}"/>   
+                                        </center>
+                                    </p:column> 
+                                    <p:column headerText="POAR/Inpower 2" sortBy="#{nodesR.power2}">   
+                                        <center>
+                                            <h:outputText value="#{nodesR.power2}"/>   
+                                        </center>
+                                    </p:column>
+                                </p:dataTable>
+                            </h:panelGrid>
+                        </h:panelGrid>
+                    </h:panelGrid><br/><br/>
+                    <p:dataTable id="tableNodesF1" var="alarm" value="#{nodePollerManagedBean.node.listAlarm}" draggableColumns="true" rows="5" paginator="true" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                 rowsPerPageTemplate="5,10,15" reflow="true" paginatorPosition="bottom" style="width: 80%; font-size: smaller; align-content: center; align-items: center; alignment-adjust: central;" selection="#{nodePollerManagedBean.node.selectNodeAlarmDTO}" rowKey="#{alarm}" emptyMessage="No hay Registros" widgetVar="nodesTableF1" >                    
+
+                        <f:facet name="header" >
+                            Alarmas Registradas<p:spacer width="20"/>
+                            <h:commandLink>
+                                <p:graphicImage value="./resources/img/excel1.png" title="Exportar a Excel"/>
+                                <p:dataExporter type="xls" target="tableNodesF1" fileName="Historial Alarmas" postProcessor="#{nodePollerManagedBean.node.postProcessXLS}"/>
+                            </h:commandLink>
+                        </f:facet>
+                        <p:column headerText="Fecha Alarma" style="width: 15%" sortBy="#{alarm.fecha}">     
+                            <h:outputText value="#{alarm.fecha}"/>
+                        </p:column>
+                        <p:column headerText="Nodo" sortBy="#{alarm.nodo}">  
+                            <center>
+                                <h:outputText value="#{alarm.nodo}"/>
+                            </center>
+                        </p:column>
+                        <p:column headerText="Plataforma" sortBy="#{alarm.plataforma}"> 
+                            <center>
+                                <h:outputText value="#{alarm.plataforma}"/>
+                            </center>
+                        </p:column>
+                        <p:column headerText="Chasis" sortBy="#{alarm.chasis}">    
+                            <center>
+                                <h:outputText value="#{alarm.chasis}"/>
+                            </center>
+                        </p:column>
+                        <p:column headerText="SDS" sortBy="#{alarm.sds}">     
+                            <center>
+                                <h:outputText value="#{alarm.sds}"/>
+                            </center>
+                        </p:column>
+                        <p:column headerText="Ciudad" sortBy="#{alarm.ciudad}">     
+                            <center>
+                                <h:outputText value="#{alarm.ciudad}"/>
+                            </center>
+                        </p:column>
+                        <p:column headerText="Regional" sortBy="#{alarm.regional}">    
+                            <center>
+                                <h:outputText value="#{alarm.regional}"/>
+                            </center>
+                        </p:column>
+                        <!--p:column headerText="Causa" sortBy="#//{alarm.typeAlarm}">    
+                            <center>
+                                <h:outputText value="#//{alarm.typeAlarm}"/>
+                            </center>
+                        </p:column-->
+                        <!--p:column headerText="Nivel" sortBy="#//{alarm.alarma}">     
+                            <center>
+                                <h:outputText value="#//{alarm.alarma}"/>
+                            </center>
+                        </p:column-->
+                        <!--p:column style="text-align:center; width: 5%;">
+                            <center>
+                                <p:commandButton icon="ui-icon-search" title="Información del Nodo" action="#{nodePollerManagedBean.node.findInfoNode(alarm.nodo)}" styleClass="buttonNode" update=":formNode:msgs :formNode:panelDatos"/>
+                            </center>
+                        </p:column-->
+                        <!--p:column selectionMode="multiple" style="text-align:center; width: 5%;"/-->
+                        <f:facet name="footer">
+                            <!--p:outputLabel value="#//{nodePollerManagedBean.node.nodesUp}" style="margin-left: 15%"/><p:spacer width="3"/><p:graphicImage value="#//{nodePollerManagedBean.node.stateNodes(1)}"/><p:spacer width="5"/>
+                            <p:outputLabel value="#//{nodePollerManagedBean.node.nodesDown}"/><p:spacer width="3"/><p:graphicImage value="#//{nodePollerManagedBean.node.stateNodes(2)}"/-->
+    
+                            <p:commandButton icon="ui-icon-arrowrefresh-1-s" title="Recargar" styleClass="buttonNode2" action="#{nodePollerManagedBean.node.loadAlarms()}" style="margin-left: 20%" update=":formNode:msgs :formNode:tableNodesF1"/>
+
+                            <!--p:commandButton icon="ui-icon-trash" title="Eliminar Alarma" styleClass="buttonNode" action="#//{nodePollerManagedBean.node.deleteAlarms()}" style="margin-left: 40%" update=":formNode:msgs :formNode:tableNodesF1"/-->
+                        </f:facet>
+                    </p:dataTable>
+                </center>
+            </p:layoutUnit>
+
+        </p:layout>
+        <p:dialog style="background-color: rgba(50, 50, 50, 50) !important;" header="Valores del Nodo en Tiempo Real" widgetVar="dlgNode" showEffect="clip" hideEffect="clip" width="20%" height="auto" resizable="false" rendered="true" position="left">            
+            <p:outputPanel id="panelView1" rendered="true">
+                <h:panelGrid columns="2" cellpadding="3" cellspacing="3">
+                    <h:outputLabel value="Nodo: " styleClass="textoCabeceraSeg"/>
+                    <h:outputLabel value="#{nodePollerManagedBean.node.nameNode}" styleClass="textoCabeceraSeg"/>
+                    <h:outputLabel value="fwdpwr: " styleClass="textoCabeceraSeg" />
+                    <h:outputLabel value="#{nodePollerManagedBean.node.fwdpwr}" styleClass="textoCabeceraSeg"/>
+                    <h:outputLabel value="fwdinrf: " styleClass="textoCabeceraSeg"/>
+                    <h:outputLabel value="#{nodePollerManagedBean.node.fwdinrf}" styleClass="textoCabeceraSeg"/>
+                    <h:outputLabel value="retpwr: " styleClass="textoCabeceraSeg"/>
+                    <h:outputLabel value="#{nodePollerManagedBean.node.retpwr}" styleClass="textoCabeceraSeg"/>
+                    <h:outputLabel value="retarop: " styleClass="textoCabeceraSeg"/>
+                    <h:outputLabel value="#{nodePollerManagedBean.node.retarop}" styleClass="textoCabeceraSeg"/>
+                </h:panelGrid>
+            </p:outputPanel>
+        </p:dialog>
+    </ui:define>
+</ui:composition>

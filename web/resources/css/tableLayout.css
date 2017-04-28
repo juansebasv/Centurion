@@ -1,0 +1,104 @@
+body {
+    margin: 0px;
+    font-size: 12px;
+    font-family: HelveticaKVA; 
+    margin: 10px;
+}
+
+@font-face {
+    font-family: HelveticaKVA;
+    src: url("/NodePoller/faces/javax.faces.resources/font/HelveticaKVAFont.woff");
+}
+.ui-datatable-tablewrapper{
+    font-size: 11.6px !important;
+    font-family: Tahoma !important; 
+}
+.ui-state-hover{
+    background: #484848;
+    color:#ffffff;
+}
+.ui-state-highlight{
+    border: #fef4d5 !important;
+    background: url("/NodePoller/faces/javax.faces.resources/img/bg_cell.png") top repeat-x #ffffff !important ;
+}
+
+.ui-datatable-header{
+    font-size: 14.7px;
+    font-family: HelveticaKVA !important; 
+    font-weight: bold;
+}
+
+
+
+.ui-datatable-odd{
+    background: #f0f0f0;
+}
+.ui-datatable-tablewrapper{
+    background:#ffffff; 
+}
+#top {
+    background-color: #036fab;
+    color: white;
+    padding: 10px;
+    margin: 0px 0px 10px 0px;
+}
+
+.ui-datatable-header {
+    border: 0 !important;
+    background: #484848 !important;
+    color: #ffffff !important;
+    font-weight: normal !important;
+    font-family: Arial !important;
+}
+
+.ui-datatable-footer {
+    border: 0 !important;
+    background: #484848 !important;
+    color: #ffffff !important;
+    font-weight: normal !important;
+    font-family: Arial !important;
+}
+
+.ui-paginator {
+    border: 0 !important;
+    background: #404040 !important;
+    color: #ffffff !important;
+    font-weight: normal !important;
+    font-family: Arial !important;
+}
+#bottom {
+    background-color: #c2dfef;
+    padding: 10px;
+}
+
+#left {
+    background-color: #ece3a5;
+    padding: 10px;
+    width: 150px;
+    vertical-align: top;
+}
+
+#right {
+    background-color: #ece3a5;
+    padding: 10px;
+    width: 150px;
+    vertical-align: top;
+}
+
+#content {
+    background-color: #dddddd;
+    padding: 10px;
+        vertical-align: top;
+}
+
+#top a:link, #top a:visited {
+  color: white;
+  font-weight : bold;
+  text-decoration: none;
+}
+
+#top a:link:hover, #top a:visited:hover  {
+  color: black;
+  font-weight : bold;
+  text-decoration : underline;
+}
