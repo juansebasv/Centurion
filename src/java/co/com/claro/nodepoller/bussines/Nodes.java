@@ -145,7 +145,7 @@ public final class Nodes implements Serializable {
                 if (cell.getColumnIndex() == 9) {
                     cell.setCellValue("");
                 } else if (cell.getStringCellValue().toUpperCase().contains("<CENTER>")) {
-                    cell.setCellValue(cell.getStringCellValue().toUpperCase().substring(8, cell.getStringCellValue().length() - 9));
+                    cell.setCellValue(cell.getStringCellValue().substring(8, cell.getStringCellValue().length() - 9));
                 } else {
                     cell.setCellValue(cell.getStringCellValue().toUpperCase());
                 }
