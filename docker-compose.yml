@@ -1,0 +1,63 @@
+# ============================================================================
+#  Centurion / NodePoller - stack local completo
+#    db         : MySQL 5.7  (esquema + semilla en db/init/)
+#    app        : Apache TomEE 1.7.5 + NodePoller.war   -> http://localhost:8080/NodePoller/
+#    opticalws  : mock del WebService SOAP "OpticalWS" (boton "Niveles")
+#
+#  Config de conexion: config/centurion.env  (env_file de los 3 servicios)
+# ============================================================================
+services:
+
+  db:
+    image: mysql:5.7
+    container_name: centurion-db
+    env_file: [config/centurion.env]
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+      - --explicit_defaults_for_timestamp=1
+    ports:
+      - "3307:3306"                     # host 3307 -> evita chocar con un MySQL local
+    volumes:
+      - ./db/init:/docker-entrypoint-initdb.d:ro
+      - centurion-dbdata:/var/lib/mysql
+    healthcheck:
+      # Consulta real por TCP como usuario de la app: sigue "unhealthy" mientras
+      # MySQL corre los scripts de init (servidor temporal, sin red).
+      test: ["CMD-SHELL", "mysql -h127.0.0.1 -u$$MYSQL_USER -p$$MYSQL_PASSWORD -e 'SELECT COUNT(*) FROM optical_nodealarm' $$MYSQL_DATABASE || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 40
+      start_period: 40s
+
+  app:
+    build:
+      context: .
+      dockerfile: docker/app.Dockerfile
+    image: centurion-app
+    container_name: centurion-app
+    env_file: [config/centurion.env]
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "8080:8080"
+
+  # Mock SOAP. Comparte el network namespace de "app" para que la app lo alcance
+  # en http://localhost:81 (URL compilada en el cliente JAX-WS via -wsdllocation).
+  opticalws:
+    build:
+      context: ./docker/opticalws
+    image: centurion-opticalws
+    container_name: centurion-opticalws
+    env_file: [config/centurion.env]
+    environment:
+      PORT: "${OPTICALWS_PORT:-81}"
+    network_mode: "service:app"
+    depends_on:
+      app:
+        condition: service_started
+    restart: unless-stopped
+
+volumes:
+  centurion-dbdata:

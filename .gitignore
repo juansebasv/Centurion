@@ -1,0 +1,29 @@
+# --- Maven ---
+/target/
+pom.xml.tag
+pom.xml.releaseBackup
+release.properties
+
+# --- build NetBeans / Ant (legado) ---
+/build/
+/dist/
+/nbproject/private/
+
+# --- artefactos ---
+*.war
+*.class
+
+# --- IDE / SO ---
+.idea/
+*.iml
+.vscode/
+.DS_Store
+Thumbs.db
+
+# --- Docker / runtime ---
+# jars antiguos: ahora los gestiona Maven (excepto libs/blitzer-1.0.10.jar)
+/web/WEB-INF/lib/
+!/libs/
+
+# --- local env override (si algun dia se separa) ---
+config/*.local.env
