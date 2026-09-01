@@ -1,0 +1,9 @@
+# build context = repo root (imagen "app"); solo se necesitan pom.xml, src/, web/, libs/, docker/
+.git
+target
+build
+dist
+nbproject/private
+*.log
+*.war
+db/init/*.sql.bak

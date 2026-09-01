@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>co.com.claro</groupId>
+    <artifactId>nodepoller</artifactId>
+    <version>1.0.0</version>
+    <packaging>war</packaging>
+
+    <name>Centurion (NodePoller)</name>
+    <description>Tablero de monitoreo de nodos opticos - Claro Colombia</description>
+
+    <!-- ===================================================================== -->
+    <!-- Propiedades -->
+    <!-- ===================================================================== -->
+    <properties>
+        <maven.compiler.source>1.7</maven.compiler.source>
+        <maven.compiler.target>1.7</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <!-- versiones de dependencias (una sola fuente de verdad) -->
+        <primefaces.version>5.3</primefaces.version>
+        <primefaces-extensions.version>4.0.0</primefaces-extensions.version>
+        <blitzer.version>1.0.10</blitzer.version>
+        <poi.version>3.8</poi.version>
+        <javaee.version>6.0</javaee.version>
+        <eclipselink.version>2.5.2</eclipselink.version>
+        <jpa.version>2.1.0</jpa.version>
+
+        <!-- versiones de plugins -->
+        <war-plugin.version>3.4.0</war-plugin.version>
+        <compiler-plugin.version>3.13.0</compiler-plugin.version>
+        <antrun-plugin.version>3.1.0</antrun-plugin.version>
+        <build-helper-plugin.version>3.5.0</build-helper-plugin.version>
+    </properties>
+
+    <!-- ===================================================================== -->
+    <!-- Dependencias -->
+    <!--  -->
+    <!-- provided -> lo aporta Apache TomEE 1.7.5 en su carpeta lib/ -->
+    <!-- compile -> se empaqueta dentro del WAR (WEB-INF/lib) -->
+    <!-- ===================================================================== -->
+    <dependencies>
+
+        <!-- Plataforma Java EE 6 (TomEE la provee) -->
+        <!-- Trae: JSF 2.1, EJB 3.1, CDI 1.0, JPA 2.0, Servlet 3.0, -->
+        <!-- JAX-WS 2.2, JAXB 2.2, Bean Validation 1.0, JTA 1.1 -->
+        <dependency>
+            <groupId>javax</groupId>
+            <artifactId>javaee-api</artifactId>
+            <version>${javaee.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- JPA / EclipseLink: SE EMPAQUETA en el WAR. -->
+        <!-- El perfil web de TomEE 1.7.5 solo trae OpenJPA 2.4.2; para usar -->
+        <!-- EclipseLink 2.5.2 (persistence.xml lo fija como <provider>) hay que -->
+        <!-- incluir el proveedor + la API JPA 2.1 dentro de WEB-INF/lib. -->
+        <!-- 'eclipselink' es el uber-jar (core + jpa + asm + antlr). -->
+        <dependency>
+            <groupId>org.eclipse.persistence</groupId>
+            <artifactId>eclipselink</artifactId>
+            <version>${eclipselink.version}</version>
+            <exclusions>
+                <!-- API SDO: solo la usa MOXy/SDO, no JPA => fuera del WAR -->
+                <exclusion>
+                    <groupId>org.eclipse.persistence</groupId>
+                    <artifactId>commonj.sdo</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.persistence</groupId>
+            <artifactId>javax.persistence</artifactId>
+            <version>${jpa.version}</version>
+        </dependency>
+
+        <!-- Capa de vista: PrimeFaces (SI se empaqueta) -->
+        <dependency>
+            <groupId>org.primefaces</groupId>
+            <artifactId>primefaces</artifactId>
+            <version>${primefaces.version}</version>
+        </dependency>
+
+        <!-- PrimeFaces Extensions: solo se usa <pe:timer> en basicTemplate.xhtml. -->
+        <!-- Su POM arrastra transitivos toxicos (Mojarra jsf-api/impl, servlet, -->
+        <!-- el-api, junit...) que chocan con MyFaces de TomEE => se excluyen TODOS -->
+        <!-- y se declaran aparte SOLO los que MyFaces necesita al arrancar para -->
+        <!-- registrar los renderers de la libreria (gson lo usa GChartRenderer). -->
+        <dependency>
+            <groupId>org.primefaces.extensions</groupId>
+            <artifactId>primefaces-extensions</artifactId>
+            <version>${primefaces-extensions.version}</version>
+            <exclusions>
+                <exclusion><groupId>*</groupId><artifactId>*</artifactId></exclusion>
+            </exclusions>
+        </dependency>
+        <!-- requerido en runtime por primefaces-extensions (se empaqueta) -->
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.2.2</version>
+        </dependency>
+        <!-- commons-lang3 tambien lo usa primefaces-extensions, pero TomEE 1.7.5 -->
+        <!-- ya trae commons-lang3-3.3.2 => provided, no se empaqueta -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.3.2</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- NOTA: el tema 'blitzer' (web.xml -> primefaces.THEME) NO esta en -->
+        <!-- Maven Central. El JAR vive en /libs y el maven-war-plugin lo copia -->
+        <!-- a WEB-INF/lib (ver <webResources> mas abajo). -->
+
+        <!-- Exportacion a Excel (.xls / HSSF) -->
+        <!-- Usado por Nodes.postProcessXLS y <p:dataExporter type="xls">. -->
+        <!-- Solo formato binario .xls => basta 'poi', NO se necesita poi-ooxml. -->
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi</artifactId>
+            <version>${poi.version}</version>
+            <exclusions>
+                <!-- TomEE 1.7.5 ya trae commons-codec-1.9; evitar empaquetar 1.5 -->
+                <exclusion>
+                    <groupId>commons-codec</groupId>
+                    <artifactId>commons-codec</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <!-- ================================================================== -->
+        <!-- RETIRADAS respecto al proyecto NetBeans original (sin uso real): -->
+        <!-- - cron4j-2.2.5 : nadie lo importa (se usa java.util.Timer) -->
+        <!-- - itext-2.1.7 : solo haria falta para exportar tablas a PDF -->
+        <!-- - org.eclipse.persistence.* sueltos (antlr/asm/core/jpa/jpql/ -->
+        <!-- modelgen) : el uber-jar 'eclipselink' ya los contiene -->
+        <!-- ================================================================== -->
+
+    </dependencies>
+
+    <!-- ===================================================================== -->
+    <!-- Build -->
+    <!-- Se mantiene la distribucion NetBeans (src/java, web/) para no romper -->
+    <!-- el proyecto en el IDE; Maven apunta a esas carpetas. -->
+    <!-- ===================================================================== -->
+    <build>
+        <finalName>NodePoller</finalName>
+        <sourceDirectory>${project.basedir}/src/java</sourceDirectory>
+
+        <resources>
+            <!-- persistence.xml -> WEB-INF/classes/META-INF/persistence.xml -->
+            <resource>
+                <directory>${project.basedir}/src/conf</directory>
+                <targetPath>META-INF</targetPath>
+                <includes>
+                    <include>persistence.xml</include>
+                </includes>
+            </resource>
+        </resources>
+
+        <plugins>
+
+            <!-- 1) Cliente SOAP OpticalWS: wsimport del JDK 8 sobre el WSDL local. -->
+            <!-- -wsdllocation conserva la URL de runtime (la responde el -->
+            <!-- contenedor 'opticalws'). wsimport exige que el dir -s exista. -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>${antrun-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>wsimport-opticalws</id>
+                        <phase>generate-sources</phase>
+                        <goals><goal>run</goal></goals>
+                        <configuration>
+                            <target>
+                                <mkdir dir="${project.build.directory}/generated-sources/wsimport"/>
+                                <exec executable="wsimport" failonerror="true">
+                                    <arg value="-keep"/>
+                                    <arg value="-Xnocompile"/>
+                                    <arg value="-s"/>
+                                    <arg value="${project.build.directory}/generated-sources/wsimport"/>
+                                    <arg value="-p"/>
+                                    <arg value="co.com.claro.opticalws"/>
+                                    <arg value="-wsdllocation"/>
+                                    <arg value="http://localhost:81/OpticalWSrv/services/OpticalWS?wsdl"/>
+                                    <arg value="${project.basedir}/web/WEB-INF/wsdl/localhost_81/OpticalWSrv/services/OpticalWS.wsdl"/>
+                                </exec>
+                            </target>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- 2) Anade el codigo generado por wsimport como fuente a compilar -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <version>${build-helper-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>add-wsimport-sources</id>
+                        <phase>generate-sources</phase>
+                        <goals><goal>add-source</goal></goals>
+                        <configuration>
+                            <sources>
+                                <source>${project.build.directory}/generated-sources/wsimport</source>
+                            </sources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- 3) Compilador -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${compiler-plugin.version}</version>
+            </plugin>
+
+            <!-- 4) Empaquetado WAR -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>${war-plugin.version}</version>
+                <configuration>
+                    <warSourceDirectory>${project.basedir}/web</warSourceDirectory>
+                    <failOnMissingWebXml>true</failOnMissingWebXml>
+                    <webResources>
+                        <!-- tema PrimeFaces 'blitzer' (no disponible en repos publicos) -->
+                        <resource>
+                            <directory>${project.basedir}/libs</directory>
+                            <targetPath>WEB-INF/lib</targetPath>
+                            <includes>
+                                <include>blitzer-${blitzer.version}.jar</include>
+                            </includes>
+                        </resource>
+                    </webResources>
+                </configuration>
+            </plugin>
+
+        </plugins>
+    </build>
+</project>
